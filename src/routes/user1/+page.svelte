@@ -1,14 +1,18 @@
 <script>
-	import { confetti } from '@neoconfetti/svelte';
+	import { io } from 'socket.io-client';
+	import Confetti from '../Confetti.svelte';
+	export let celebrate = false;
+	const socket = io();
+	socket.on('winner', (winnerId) => {
+		if (winnerId === 1) {
+			celebrate = true;
+			setTimeout(() => {
+				celebrate = false;
+			}, 4000);
+		}
+	});
 </script>
 
-<div
-	style="position: absolute; left: 50%; top: 30%"
-	use:confetti={{
-		particleCount: undefined,
-		force: 0.7,
-		stageWidth: window.innerWidth,
-		stageHeight: window.innerHeight,
-		colors: ['#ff3e00', '#40b3ff', '#676778']
-	}}
-/>
+{#if celebrate}
+	<Confetti />
+{/if}
