@@ -9,6 +9,12 @@
 
 <div>
 	<h2>Select winner</h2>
-	<button on:click={() => setWinner(1)}>Contestant 1</button>
-	<button on:click={() => setWinner(2)}>Contestant 2</button>
+	<button class="button" on:click={() => setWinner(1)}>Contestant 1</button>
+	<button class="button" on:click={() => setWinner(2)}>Contestant 2</button>
 </div>
+
+<style>
+	.button {
+		font-size: 24px;
+	}
+</style>
