@@ -8,13 +8,14 @@
 </script>
 
 <div>
-	<h2>Select winner</h2>
-	<button class="button" on:click={() => setWinner(1)}>Contestant 1</button>
-	<button class="button" on:click={() => setWinner(2)}>Contestant 2</button>
+	<h2 class="text-lg">Select winner</h2>
+	<button class="text-xl bg-amber-400 hover:bg-amber-500 p-3 " on:click={() => setWinner(1)}
+		>Contestant 1</button
+	>
+	<button class="text-xl  bg-amber-400 hover:bg-amber-500 p-3" on:click={() => setWinner(2)}
+		>Contestant 2</button
+	>
 </div>
 
 <style>
-	.button {
-		font-size: 24px;
-	}
 </style>

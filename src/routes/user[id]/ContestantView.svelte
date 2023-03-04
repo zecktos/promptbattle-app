@@ -1,12 +1,11 @@
 <script>
-	import { createEventDispatcher } from 'svelte';
 	import { io } from 'socket.io-client';
 	import Confetti from '../Confetti.svelte';
 	import { page } from '$app/stores';
 
-	const dispatch = createEventDispatcher();
 	let prompt = '';
-	let imageUrl = '';
+	let imageUrl =
+		'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+P+/HgAFhAJ/wlseKgAAAABJRU5ErkJggg==';
 
 	export let celebrate = false;
 	const socket = io();
@@ -28,11 +27,21 @@
 		const jsonData = await response.json();
 		imageUrl = jsonData.data[0].url;
 	}
+
+	function init(el) {
+		el.focus();
+	}
 </script>
 
 {#if celebrate}
 	<Confetti />
 {/if}
-<input bind:value={prompt} />
-<img src={imageUrl} />
-<button on:click={submit} type="submit">Submit</button>
+<textarea
+	class="autofocus w-100 absolute top-0 left-0 h-screen w-screen text-7xl lg:p-36 bg-violet-500"
+	bind:value={prompt}
+	use:init
+/>
+<img class="absolute z-20 w-1/2 h-auto pointer-events-none" src={imageUrl} />
+<button class="bg-white p-4 z-10 absolute right-0 bottom-0" on:click={submit} type="submit"
+	>Submit</button
+>
