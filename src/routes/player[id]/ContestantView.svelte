@@ -65,18 +65,11 @@
 	}
 </script>
 
-{#if isCelebrating}
-	<Confetti />
-{/if}
-{#if isGenerating}
-	<div class="absolute left-0 top-0 w-full h-full flex justify-center items-center z-10">
-		<LoadingSpinnerWave size="200" color="#FFF" unit="px" duration="1s" />
-	</div>
-{/if}
-
-<div class="absolute left-0 top-0 w-full h-full overflow-hidden">
+<div
+	class="absolute left-0 top-0 w-full h-full overflow-hidden text-black bg-violet-500 p-16 md:p-20 lg:p-36"
+>
 	<textarea
-		class="autofocus w-100 absolute top-0 left-0 h-screen w-screen text-7xl lg:p-36 bg-violet-500"
+		class="autofocus w-full h-full overflow-scroll bg-violet-500 top-0 left-0 text-4xl md:text-7xl "
 		placeholder="Type your prompt"
 		bind:value={prompt}
 		use:init
@@ -86,8 +79,39 @@
 			<img alt="" class="z-20 h-full mx-auto pointer-events-none" src={imageUrl} />
 		</div>
 	{/if}
-	<div class="absolute right-0 bottom-0">
-		<button class="bg-white text-black p-4 z-10 " on:click={reset} type="submit">Reset</button>
-		<button class="bg-white text-black p-4 z-10 " on:click={submit} type="submit">Generate</button>
+	{#if isCelebrating}
+		<Confetti />
+	{/if}
+	{#if isGenerating}
+		<div class="absolute left-0 top-0 w-full h-full flex justify-center items-center z-10">
+			<LoadingSpinnerWave size="200" color="#FFF" unit="px" duration="1s" />
+		</div>
+	{/if}
+	<div
+		class="w-full border-none focus:border-none left-0 bottom-0 absolute flex border-t-white border-2"
+	>
+		<div>Player {$page.params.id}</div>
+		<div class="ml-auto">
+			<button class="bg-white text-black p-1 md:p-4 z-10 " on:click={reset} type="submit"
+				>Reset</button
+			>
+			<button class="bg-white text-black p-1 md:p-4 z-10 " on:click={submit} type="submit"
+				>Generate</button
+			>
+		</div>
 	</div>
 </div>
+
+<style>
+	textarea {
+		border: none;
+		overflow: auto;
+		outline: none;
+
+		-webkit-box-shadow: none;
+		-moz-box-shadow: none;
+		box-shadow: none;
+
+		resize: none; /*remove the resize handle on the bottom right*/
+	}
+</style>
