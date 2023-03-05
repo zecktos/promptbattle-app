@@ -12,8 +12,14 @@ const webSocketServerPlugin = {
 
 		// server-side
 		io.on('connection', (socket) => {
-			socket.on('winner', (userId) => {
-				io.emit('winner', userId);
+			socket.on('celebrate', (userId) => {
+				io.emit('celebrate', userId);
+			});
+			socket.on('generate', (userId) => {
+				io.emit('generate', userId);
+			});
+			socket.on('reset', (userId) => {
+				io.emit('reset', userId);
 			});
 		});
 	}
