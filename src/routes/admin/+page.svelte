@@ -2,19 +2,36 @@
 	import { io } from 'socket.io-client';
 	const socket = io();
 
-	function setWinner(userId) {
-		socket.emit('winner', userId);
+	function triggerCelebration(userId) {
+		socket.emit('celebrate', userId);
+	}
+	function triggerGenerate(userId) {
+		socket.emit('generate', userId);
 	}
 </script>
 
 <div>
-	<h2 class="text-lg">Select winner</h2>
-	<button class="text-xl bg-amber-400 hover:bg-amber-500 p-3 " on:click={() => setWinner(1)}
-		>Contestant 1</button
-	>
-	<button class="text-xl  bg-amber-400 hover:bg-amber-500 p-3" on:click={() => setWinner(2)}
-		>Contestant 2</button
-	>
+	<div>
+		<h2 class="text-lg">Trigger generate</h2>
+		<button class="text-xl p-3 border hover:bg-gray-800" on:click={() => triggerGenerate()}
+			>Both players</button
+		>
+		<button class="text-xl p-3 border hover:bg-gray-800" on:click={() => triggerGenerate(1)}
+			>Player 1</button
+		>
+		<button class="text-xl p-3 border hover:bg-gray-800" on:click={() => triggerGenerate(2)}
+			>Player 2</button
+		>
+	</div>
+	<div class="mt-8">
+		<h2 class="text-lg">Celebrate winner</h2>
+		<button class="text-xl p-3 border hover:bg-gray-800" on:click={() => triggerCelebration(1)}
+			>Player 1</button
+		>
+		<button class="text-xl p-3 border hover:bg-gray-800" on:click={() => triggerCelebration(2)}
+			>Player 2</button
+		>
+	</div>
 </div>
 
 <style>
