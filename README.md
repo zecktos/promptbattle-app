@@ -7,7 +7,7 @@ This is a little Sveltekit Application to support your local Prompt Battle event
 - Webserver to serve different clients/screens
 - Admin interface for the "battle master"
 - Websockets for synchronised prompt submission (without the contestants having to click 'generate') and winner confetti 🎉
-- Access to image-to-text APIs such as DALL-E and Stable Diffusion
+- Access to text-to-image APIs such as DALL-E and Stable Diffusion
 
 ## Set up
 
