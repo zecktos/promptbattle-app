@@ -1,5 +1,14 @@
 # Prompt Battle App
 
+This is a little Sveltekit Application to support your local Prompt Battle event.
+
+## Features:
+
+- Webserver to serve different clients/screens
+- Admin interface for the "battle master"
+- Websockets for synchronised prompt submission (without the contestants having to click 'generate') and winner confetti 🎉
+- Access to image-to-text APIs such as DALL-E and Stable Diffusion
+
 ## Set up
 
 1. Install the dependencies via `npm install`
@@ -18,3 +27,17 @@ As a temporary workaround, we recommend running the app in (Vite's) _dev mode_ d
 `npm run battle:dalle` starts the prompt battle with DALL-E as the image engine
 
 `npm run battle:sd` starts the prompt battle with Stable Diffusion as the image engine
+
+## Screens (aka Routes)
+
+### /admin
+
+This is the interface for the "Prompt Master", to trigger the submissions, winner confetti 🎉 and more!
+
+### /player1
+
+This is the interface for player 1
+
+### /player2
+
+This is the interface for player 2
