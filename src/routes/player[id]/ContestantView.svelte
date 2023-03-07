@@ -45,7 +45,7 @@
 			showImage = false;
 			imageUrl = '';
 			isGenerating = true;
-			const response = await fetch('/api/txt2img', {
+			const response = await fetch('/api/txt2img?engine=dalle', {
 				method: 'POST',
 				body: JSON.stringify({ prompt }),
 				headers: { 'content-type': 'application/json' }
@@ -54,9 +54,9 @@
 			isGenerating = false;
 			showImage = true;
 			const jsonData = await response.json();
-			imageUrl = jsonData.data[0].url;
+			imageUrl = jsonData.url;
 		} catch (err) {
-			console.error(err);
+			alert(err);
 		}
 	}
 

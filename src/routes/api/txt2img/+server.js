@@ -1,13 +1,29 @@
 import { json } from '@sveltejs/kit';
-import { post as dallePost } from './dalle-client';
+import { createImage as sdCreateImage } from './sd-client';
+import { createImage as dalleCreateImage } from './dalle-client';
 
 export function GET(params) {
 	return new Response(JSON.stringify(params));
 }
 
-export async function POST({ request }) {
+export async function POST({ request, url }) {
 	const requestJson = await request.json();
 	const { prompt } = requestJson;
-	const res = await dallePost(prompt);
-	return json(res); //in welcher Form würde ich Bilddaten zurück schicken? Als Text, json oder mime?
+	const engine = url.searchParams.get('engine');
+	if (!engine) {
+		throw Error('Image generation engine is not defined!');
+	}
+	let createImage;
+	switch (engine) {
+		case 'sd':
+			createImage = sdCreateImage;
+			break;
+		case 'dalle':
+			createImage = dalleCreateImage;
+			break;
+		default:
+			throw Error('Unknown image generation engine!');
+	}
+	const res = await createImage(prompt);
+	return json(res); //TODO: Add types! {url: 'my-url.png'}
 }
