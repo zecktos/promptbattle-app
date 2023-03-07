@@ -6,10 +6,11 @@ export function GET(params) {
 	return new Response(JSON.stringify(params));
 }
 
-export async function POST({ request, url }) {
+export async function POST({ request }) {
 	const requestJson = await request.json();
 	const { prompt } = requestJson;
-	const engine = url.searchParams.get('engine');
+	const engine = import.meta.env.VITE_IMAGE_ENGINE;
+
 	if (!engine) {
 		throw Error('Image generation engine is not defined!');
 	}

@@ -13,6 +13,8 @@ We have included a Stable Diffusion API Client which expects as an API: automati
 
 ## During the Prompt Battle event:
 
-As a temporary workaround, we recommend running the app in (Vite's) _dev mode_ during the event:
+As a temporary workaround, we recommend running the app in (Vite's) _dev mode_ during the event, and sharing it with the network, so different clients (contestants, battle admin, etc.) can access the app.:
 
-`npm run dev` will share the application with the network, so different clients (contestants, battle admin, etc.) can access the app.
+`npm run battle:dalle` starts the prompt battle with DALL-E as the image engine
+
+`npm run battle:sd` starts the prompt battle with Stable Diffusion as the image engine
