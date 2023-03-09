@@ -6,11 +6,13 @@
 	<meta name="description" content="Prompt Battle" />
 </svelte:head>
 
-<section class="text-2xl md:text-3xl">
-	<h1>Screens</h1>
-	<a href="/admin">Admin</a>
-	<a href="/player1">Player 1</a>
-	<a href="/player1">Player 2</a>
+<section class="text-2xl">
+	<h1 class="text-center mb-4 text-2xl md:text-3xl">Screens</h1>
+	<div class="grid gap-3">
+		<a href="/admin" class="border-2 text-center p-3 bg-blue-900">Admin</a>
+		<a href="/player1" class="border-2 text-center p-3 bg-blue-900">Player 1</a>
+		<a href="/player1" class="border-2 text-center p-3 bg-blue-900">Player 2</a>
+	</div>
 </section>
 
 <style>

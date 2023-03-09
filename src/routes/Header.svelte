@@ -1,10 +1,15 @@
 <script>
-	import { page } from '$app/stores';
+	const engine =
+		import.meta.env.VITE_IMAGE_ENGINE === 'sd'
+			? 'Stable Diffusion'
+			: import.meta.env.VITE_IMAGE_ENGINE === 'dalle'
+			? 'DALL-E'
+			: '';
 </script>
 
-<header class="fixed flex z-20 py-4 text-sm md:text-xl uppercase">
+<header class="fixed flex h-12 z-20 text-sm md:text-xl uppercase">
 	<a class="w-screen no-underline hover:no-underline" href="/"
-		><h1 class="text-center flex-grow">Prompt Battle ({import.meta.env.VITE_IMAGE_ENGINE})</h1></a
+		><h1 class="text-center flex-grow">Prompt Battle ({engine})</h1></a
 	>
 </header>
 

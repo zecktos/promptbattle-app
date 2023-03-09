@@ -5,7 +5,7 @@
 
 <div>
 	<Header />
-	<slot />
+	<div class="pt-12"><slot /></div>
 </div>
 
 <style>
