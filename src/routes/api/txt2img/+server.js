@@ -29,6 +29,7 @@ export async function POST({ request }) {
 		const res = await createImage(prompt);
 		return json(res); //TODO: Add types! {url: 'my-url.png'}
 	} catch (err) {
+		console.log(err);
 		throw error(500, { message: 'There was a problem accessing the image generation API' });
 	}
 }

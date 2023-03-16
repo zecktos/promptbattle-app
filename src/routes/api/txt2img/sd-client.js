@@ -72,14 +72,22 @@ export async function createImage(prompt) {
 		mode: 'cors'
 	});
 	if (!response.ok) {
-		const responseJson = await response.json();
-		console.log(responseJson);
-		const errorMessage = JSON.stringify(responseJson);
-		console.log(
-			`SD API response was not ok. Maybe automatic111 has changed the interface? SD API says: ${errorMessage}`
-		);
-		throw Error(`SD API Response: ${errorMessage}`);
+		if (response.status === 404) {
+			throw Error(`Gradio: No interface is running right now`);
+		}
+		try {
+			const responseJson = await response.json();
+			console.log(responseJson);
+			const errorMessage = JSON.stringify(responseJson);
+			console.log(
+				`SD API response was not ok. Maybe automatic111 has changed the interface? SD API says: ${errorMessage}`
+			);
+			throw Error(`SD API Response: ${errorMessage}`);
+		} catch (error) {
+			throw Error(`SD API Response: ${error}`);
+		}
 	}
+
 	const responseJson = await response.json();
 	console.log(responseJson);
 	const imageUrlLocal = responseJson.data[0][0].name;
