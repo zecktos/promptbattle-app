@@ -32,7 +32,7 @@ As a temporary workaround, we recommend running the app in (Vite's) _dev mode_ d
 
 ### /admin
 
-This is the interface for the "Prompt Master", to trigger the submissions, winner confetti 🎉 and more!
+This is the interface for the "Prompt Master", to trigger "Generate!", launch the winner confetti 🎉 and more!
 
 ### /player1
 
@@ -41,3 +41,11 @@ This is the interface for player 1
 ### /player2
 
 This is the interface for player 2
+
+### /audience1
+
+This is the screen that mirrors what player 1 is doing
+
+### /audience2
+
+This is the screen that mirrors what player 2 is doing
