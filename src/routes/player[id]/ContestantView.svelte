@@ -32,6 +32,10 @@
 		}
 	});
 
+	function triggerReset() {
+		socket.emit('reset', $page.params.id);
+	}
+
 	function reset() {
 		prompt = '';
 		imageUrl = '';
@@ -95,7 +99,7 @@
 	>
 		<div>Player {$page.params.id}</div>
 		<div class="ml-auto">
-			<button class="bg-white text-black p-1 md:p-4 z-10 " on:click={reset} type="submit"
+			<button class="bg-white text-black p-1 md:p-4 z-10 " on:click={triggerReset} type="submit"
 				>Reset</button
 			>
 			<button class="bg-white text-black p-1 md:p-4 z-10 " on:click={submit} type="submit"
