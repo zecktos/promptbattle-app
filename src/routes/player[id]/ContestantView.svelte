@@ -54,6 +54,10 @@
 				body: JSON.stringify({ prompt }),
 				headers: { 'content-type': 'application/json' }
 			});
+			if (!response.ok) {
+				const jsonData = await response.json();
+				throw Error(jsonData.message);
+			}
 			isGenerating = false;
 			showImage = true;
 			const jsonData = await response.json();
@@ -61,6 +65,7 @@
 			socket.emit('imageReady', { userId: $page.params.id, imageUrl: imageUrl });
 		} catch (err) {
 			alert(err);
+			isGenerating = false;
 		}
 	}
 

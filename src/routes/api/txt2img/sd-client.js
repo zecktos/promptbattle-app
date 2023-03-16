@@ -3,10 +3,10 @@ import { SD_API_URL } from '$env/static/private';
 function createRequestBody(prompt, width, height) {
 	return {
 		data: [
+			null,
 			prompt,
 			'',
-			'None',
-			'None',
+			[],
 			20,
 			'Euler a',
 			false,
@@ -42,25 +42,18 @@ function createRequestBody(prompt, width, height) {
 			true,
 			false,
 			false,
-			[
-				{
-					data: 'file=/home/jovyan/stable-diffusion-webui/outputs/txt2img-images/00006-800103704-A cat with a hat.png',
-					is_file: true,
-					name: '/home/jovyan/stable-diffusion-webui/outputs/txt2img-images/00006-800103704-A cat with a hat.png'
-				}
-			],
-			'{"prompt": "A cat with a hat", "all_prompts": ["A cat with a hat"], "negative_prompt": "", "all_negative_prompts": [""], "seed": 800103704, "all_seeds": [800103704], "subseed": 4012033325, "all_subseeds": [4012033325], "subseed_strength": 0, "width": 512, "height": 512, "sampler_name": "Euler a", "cfg_scale": 7, "steps": 20, "batch_size": 1, "restore_faces": false, "face_restoration_model": null, "sd_model_hash": "81761151", "seed_resize_from_w": 0, "seed_resize_from_h": 0, "denoising_strength": null, "extra_generation_params": {}, "index_of_first_image": 0, "infotexts": ["A cat with a hat\\nSteps: 20, Sampler: Euler a, CFG scale: 7, Seed: 800103704, Size: 512x512, Model hash: 81761151"], "styles": ["None", "None"], "job_timestamp": "20230307101407", "clip_skip": 1, "is_using_inpainting_conditioning": false}',
-			'<p>A cat with a hat<br>\nSteps: 20, Sampler: Euler a, CFG scale: 7, Seed: 800103704, Size: 512x512, Model hash: 81761151</p>',
-			"<p></p><div class='performance'><p class='time'>Time taken: <wbr>14.02s</p><p class='vram'>Torch active/reserved: 3161/3690 MiB, <wbr>Sys VRAM: 5131/19968 MiB (25.7%)</p></div>"
+			[],
+			'',
+			'',
+			''
 		],
-		fn_index: 66,
-		session_hash: 'cy2jhq2q2be'
+		fn_index: '70'
 	};
 }
 
 export async function createImage(prompt) {
 	if (!SD_API_URL) throw Error('SD_API_URL missing!');
-	const bodyContent = createRequestBody(prompt, 400, 300);
+	const bodyContent = createRequestBody(prompt, 400, 400);
 	const response = await fetch(`${SD_API_URL}/run/predict/`, {
 		credentials: 'omit',
 		headers: {
@@ -78,7 +71,17 @@ export async function createImage(prompt) {
 		method: 'POST',
 		mode: 'cors'
 	});
+	if (!response.ok) {
+		const responseJson = await response.json();
+		console.log(responseJson);
+		const errorMessage = JSON.stringify(responseJson);
+		console.log(
+			`SD API response was not ok. Maybe automatic111 has changed the interface? SD API says: ${errorMessage}`
+		);
+		throw Error(`SD API Response: ${errorMessage}`);
+	}
 	const responseJson = await response.json();
+	console.log(responseJson);
 	const imageUrlLocal = responseJson.data[0][0].name;
 	const imageUrlPublic = `${SD_API_URL}/file=${imageUrlLocal}`;
 	return { url: imageUrlPublic };

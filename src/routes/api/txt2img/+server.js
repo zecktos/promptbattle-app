@@ -1,4 +1,4 @@
-import { json } from '@sveltejs/kit';
+import { json, error } from '@sveltejs/kit';
 import { createImage as sdCreateImage } from './sd-client';
 import { createImage as dalleCreateImage } from './dalle-client';
 
@@ -12,7 +12,7 @@ export async function POST({ request }) {
 	const engine = import.meta.env.VITE_IMAGE_ENGINE;
 
 	if (!engine) {
-		throw Error('Image generation engine is not defined!');
+		throw error(500, { message: 'Unknown image generation engine!' });
 	}
 	let createImage;
 	switch (engine) {
@@ -23,8 +23,12 @@ export async function POST({ request }) {
 			createImage = dalleCreateImage;
 			break;
 		default:
-			throw Error('Unknown image generation engine!');
+			throw error(500, { message: 'Unknown image generation engine!' });
 	}
-	const res = await createImage(prompt);
-	return json(res); //TODO: Add types! {url: 'my-url.png'}
+	try {
+		const res = await createImage(prompt);
+		return json(res); //TODO: Add types! {url: 'my-url.png'}
+	} catch (err) {
+		throw error(500, { message: 'There was a problem accessing the image generation API' });
+	}
 }
