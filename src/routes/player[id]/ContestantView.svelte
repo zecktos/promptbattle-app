@@ -6,7 +6,7 @@
 
 	let prompt = '';
 	let imageUrl = '';
-	let showImage = false;
+	let showImage = true;
 	let isGenerating = false;
 	let isCelebrating = false;
 
@@ -65,17 +65,20 @@
 </script>
 
 <div
-	class="absolute left-0 top-0 w-full h-full overflow-hidden text-black bg-violet-500 p-16 md:p-20 lg:p-36"
+	class="absolute left-0 top-0 w-full h-full overflow-hidden text-black bg-violet-500 md:p-20 lg:p-36"
 >
-	<textarea
-		class="autofocus w-full h-full overflow-scroll bg-violet-500 top-0 left-0 text-4xl md:text-7xl "
-		placeholder="Type your prompt"
-		bind:value={prompt}
-		use:init
-	/>
+	<div class="p-16">
+		<textarea
+			class="autofocus w-full h-full overflow-scroll bg-violet-500 top-0 left-0 text-4xl md:text-7xl "
+			placeholder="Type your prompt"
+			bind:value={prompt}
+			use:init
+		/>
+	</div>
+
 	{#if showImage}
-		<div class="flex w-100 h-screen">
-			<img alt="" class="z-20 h-full mx-auto pointer-events-none" src={imageUrl} />
+		<div class="absolute top-0 left-0 flex w-100 h-screen">
+			<img alt="" class="h-full" src={imageUrl} />
 		</div>
 	{/if}
 	{#if isCelebrating}
