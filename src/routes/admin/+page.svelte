@@ -3,13 +3,13 @@
 	const socket = io();
 
 	function triggerCelebration(userId) {
-		socket.emit('celebrate', userId);
+		socket.emit('celebrate', { userId });
 	}
 	function triggerGenerate(userId) {
-		socket.emit('generate', userId);
+		socket.emit('generate', { userId });
 	}
 	function triggerReset(userId) {
-		socket.emit('reset', userId);
+		socket.emit('reset', { userId });
 	}
 </script>
 

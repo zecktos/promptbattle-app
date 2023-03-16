@@ -12,16 +12,19 @@ const webSocketServerPlugin = {
 
 		// server-side
 		io.on('connection', (socket) => {
+			socket.on('promptChange', ({ userId, prompt }) => {
+				io.emit('promptChange', { userId: userId, prompt: prompt });
+			});
 			socket.on('imageReady', ({ userId, imageUrl }) => {
 				io.emit('imageReady', { userId: userId, imageUrl: imageUrl });
 			});
-			socket.on('celebrate', (userId) => {
+			socket.on('celebrate', ({ userId }) => {
 				io.emit('celebrate', userId);
 			});
-			socket.on('generate', (userId) => {
+			socket.on('generate', ({ userId }) => {
 				io.emit('generate', userId);
 			});
-			socket.on('reset', (userId) => {
+			socket.on('reset', ({ userId }) => {
 				io.emit('reset', userId);
 			});
 		});

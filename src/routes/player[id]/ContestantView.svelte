@@ -10,6 +10,10 @@
 	let isGenerating = false;
 	let isCelebrating = false;
 
+	$: {
+		socket.emit('promptChange', { userId: $page.params.id, prompt: prompt });
+	}
+
 	const socket = io();
 	socket.on('celebrate', (winnerId) => {
 		if (String(winnerId) === $page.params.id) {

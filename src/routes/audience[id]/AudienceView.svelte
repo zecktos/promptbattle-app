@@ -4,7 +4,7 @@
 	import { page } from '$app/stores';
 	import { Wave as LoadingSpinnerWave } from 'svelte-loading-spinners';
 
-	const DEFAULT_PROMPT = 'Prompt not yet synchronized!';
+	const DEFAULT_PROMPT = '';
 
 	let prompt = DEFAULT_PROMPT;
 	let imageUrl = '';
@@ -13,6 +13,13 @@
 	let isCelebrating = false;
 
 	const socket = io();
+
+	socket.on('promptChange', (payload) => {
+		if (String(payload.userId) === $page.params.id) {
+			prompt = payload.prompt;
+		}
+	});
+
 	socket.on('imageReady', (payload) => {
 		if (String(payload.userId) === $page.params.id) {
 			showImage = true;
