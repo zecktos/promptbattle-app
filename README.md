@@ -13,7 +13,7 @@ This is a little Sveltekit Application to support your local Prompt Battle event
 
 1. Install the dependencies via `npm install`
 2. Configure your txt2img APIs! Create an `.env` File and add the necessary environment variables, e.g.
-   - for DALL-E you would need to set OPENAI_API_KEY (given that you have an OpenAI Account) and possibly also your OPENAI_ORG_ID
+   - for DALL-E you would need to set OPENAI_API_KEY (given that you have an OpenAI Account) and possibly also your OPENAI_ORG_ID. You can generate your DALL-E API key here: https://platform.openai.com/account/api-keys
    - for Stable Diffusion you would need to set SD_API_URL (given that you host your own SD API, more info how to do that below)
 
 ## (Optional) Hosting your own Stable Diffusion API with automatic111
@@ -27,6 +27,15 @@ As a temporary workaround, we recommend running the app in (Vite's) _dev mode_ d
 `npm run battle:dalle` starts the prompt battle with DALL-E as the image engine
 
 `npm run battle:sd` starts the prompt battle with Stable Diffusion as the image engine
+
+## Running on windows
+
+Windows has a different ways of setting environment variables
+You need to modify package.json:
+`"battle:dalle": "set VITE_IMAGE_ENGINE=dalle& vite dev --host"`
+and:
+`"battle:sd": "set VITE_IMAGE_ENGINE=sd& vite dev --host"`
+Note the "set" before the environment variable name, and the "&" right after the value (without whitespace)!
 
 ## Screens (aka Routes)
 
