@@ -4,25 +4,28 @@
 	import { page } from '$app/stores';
 	import { Wave as LoadingSpinnerWave } from 'svelte-loading-spinners';
 
-	let prompt = '';
+	const DEFAULT_PROMPT = 'Prompt not yet synchronized!';
+
+	let prompt = DEFAULT_PROMPT;
 	let imageUrl = '';
 	let showImage = true;
 	let isGenerating = false;
 	let isCelebrating = false;
 
 	const socket = io();
+	socket.on('imageReady', (payload) => {
+		if (String(payload.userId) === $page.params.id) {
+			showImage = true;
+			imageUrl = payload.imageUrl;
+		}
+	});
+
 	socket.on('celebrate', (winnerId) => {
 		if (String(winnerId) === $page.params.id) {
 			isCelebrating = true;
 			setTimeout(() => {
 				isCelebrating = false;
 			}, 4000);
-		}
-	});
-
-	socket.on('generate', (winnerId) => {
-		if (!winnerId || String(winnerId) === $page.params.id) {
-			submit();
 		}
 	});
 
@@ -33,31 +36,11 @@
 	});
 
 	function reset() {
-		prompt = '';
+		prompt = DEFAULT_PROMPT;
 		imageUrl = '';
 		showImage = false;
 		isGenerating = false;
 		isCelebrating = false;
-	}
-
-	async function submit() {
-		try {
-			showImage = false;
-			imageUrl = '';
-			isGenerating = true;
-			const response = await fetch('/api/txt2img', {
-				method: 'POST',
-				body: JSON.stringify({ prompt }),
-				headers: { 'content-type': 'application/json' }
-			});
-			isGenerating = false;
-			showImage = true;
-			const jsonData = await response.json();
-			imageUrl = jsonData.url;
-			socket.emit('imageReady', { userId: $page.params.id, imageUrl: imageUrl });
-		} catch (err) {
-			alert(err);
-		}
 	}
 
 	function init(el) {
@@ -69,12 +52,10 @@
 	class="absolute left-0 top-0 w-full h-full overflow-hidden text-black bg-violet-500 md:p-20 lg:p-36"
 >
 	<div class="p-16">
-		<textarea
-			class="autofocus w-full h-full overflow-scroll bg-violet-500 top-0 left-0 text-4xl md:text-7xl "
-			placeholder="Type your prompt"
-			bind:value={prompt}
-			use:init
-		/>
+		<span
+			class="prompt-span autofocus w-full h-full overflow-scroll bg-violet-500 top-0 left-0 text-4xl md:text-7xl "
+			use:init>{prompt}</span
+		>
 	</div>
 
 	{#if showImage}
@@ -93,20 +74,12 @@
 	<div
 		class="w-full border-none focus:border-none left-0 bottom-0 absolute flex border-t-white border-2"
 	>
-		<div>Player {$page.params.id}</div>
-		<div class="ml-auto">
-			<button class="bg-white text-black p-1 md:p-4 z-10 " on:click={reset} type="submit"
-				>Reset</button
-			>
-			<button class="bg-white text-black p-1 md:p-4 z-10 " on:click={submit} type="submit"
-				>Generate</button
-			>
-		</div>
+		<div>Audience {$page.params.id}</div>
 	</div>
 </div>
 
 <style>
-	textarea {
+	.prompt-span {
 		border: none;
 		overflow: auto;
 		outline: none;

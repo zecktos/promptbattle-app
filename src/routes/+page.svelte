@@ -10,8 +10,14 @@
 	<h1 class="text-center mb-4 text-2xl md:text-3xl">Screens</h1>
 	<div class="grid gap-3">
 		<a href="/admin" class="border-2 text-center p-3 bg-blue-900">Admin</a>
-		<a href="/player1" class="border-2 text-center p-3 bg-blue-900">Player 1</a>
-		<a href="/player2" class="border-2 text-center p-3 bg-blue-900">Player 2</a>
+		<div class="flex">
+			<a href="/player1" class="border-2 text-center p-3 bg-blue-900">Player 1</a>
+			<a href="/audience1" class="border-2 text-center p-3 bg-blue-900">Audience 1</a>
+		</div>
+		<div class="flex">
+			<a href="/player2" class="border-2 text-center p-3 bg-blue-900">Player 2</a>
+			<a href="/audience2" class="border-2 text-center p-3 bg-blue-900">Audience 2</a>
+		</div>
 	</div>
 </section>
 

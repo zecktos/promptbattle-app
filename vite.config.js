@@ -12,6 +12,9 @@ const webSocketServerPlugin = {
 
 		// server-side
 		io.on('connection', (socket) => {
+			socket.on('imageReady', ({ userId, imageUrl }) => {
+				io.emit('imageReady', { userId: userId, imageUrl: imageUrl });
+			});
 			socket.on('celebrate', (userId) => {
 				io.emit('celebrate', userId);
 			});
