@@ -20,25 +20,24 @@
 		>
 		<div>
 			<button class="text-sm p-3  hover:bg-gray-800" on:click={() => triggerGenerate(1)}
-				>🎬 Player 1</button
+				>Player 1</button
 			>
 			<button class="text-sm p-3  hover:bg-gray-800" on:click={() => triggerGenerate(2)}
-				>🎬 Player 2</button
+				>Player 2</button
 			>
 		</div>
 	</div>
 	<div class="mt-8">
-		<h2 class="text-lg">Celebrate winner</h2>
 		<button class="text-xl p-3 border hover:bg-gray-800" on:click={() => triggerCelebration(1)}
-			>🎉 Player 1</button
+			>🎉 Winner 1</button
 		>
 		<button class="text-xl p-3 border hover:bg-gray-800" on:click={() => triggerCelebration(2)}
-			>🎉 Player 2</button
+			>🎉 Winner 2</button
 		>
 	</div>
 	<div class="mt-8">
 		<button class="text-xl p-3 border hover:bg-gray-800" on:click={() => triggerReset()}
-			>Reset</button
+			>🧽 Clean</button
 		>
 		<div>
 			<button class="text-sm p-3 hover:bg-gray-800" on:click={() => triggerReset(1)}
