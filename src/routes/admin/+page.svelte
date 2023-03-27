@@ -13,39 +13,41 @@
 	}
 </script>
 
-<div>
+<div class="p-5 text-center">
 	<div>
-		<h2 class="text-lg">Generate Images</h2>
 		<button class="text-xl p-3 border hover:bg-gray-800" on:click={() => triggerGenerate()}
-			>Both players</button
+			>🎬 Generate Images</button
 		>
-		<button class="text-xl p-3 border hover:bg-gray-800" on:click={() => triggerGenerate(1)}
-			>Player 1</button
-		>
-		<button class="text-xl p-3 border hover:bg-gray-800" on:click={() => triggerGenerate(2)}
-			>Player 2</button
-		>
+		<div>
+			<button class="text-sm p-3  hover:bg-gray-800" on:click={() => triggerGenerate(1)}
+				>🎬 Player 1</button
+			>
+			<button class="text-sm p-3  hover:bg-gray-800" on:click={() => triggerGenerate(2)}
+				>🎬 Player 2</button
+			>
+		</div>
 	</div>
 	<div class="mt-8">
 		<h2 class="text-lg">Celebrate winner</h2>
 		<button class="text-xl p-3 border hover:bg-gray-800" on:click={() => triggerCelebration(1)}
-			>Player 1</button
+			>🎉 Player 1</button
 		>
 		<button class="text-xl p-3 border hover:bg-gray-800" on:click={() => triggerCelebration(2)}
-			>Player 2</button
+			>🎉 Player 2</button
 		>
 	</div>
 	<div class="mt-8">
-		<h2 class="text-lg">Reset</h2>
-		<button class="text-xl p-3 border hover:bg-gray-800" on:click={() => triggerReset(1)}
-			>Player 1</button
-		>
-		<button class="text-xl p-3 border hover:bg-gray-800" on:click={() => triggerReset(2)}
-			>Player 2</button
-		>
 		<button class="text-xl p-3 border hover:bg-gray-800" on:click={() => triggerReset()}
-			>Both players</button
+			>Reset</button
 		>
+		<div>
+			<button class="text-sm p-3 hover:bg-gray-800" on:click={() => triggerReset(1)}
+				>Player 1</button
+			>
+			<button class="text-sm p-3  hover:bg-gray-800" on:click={() => triggerReset(2)}
+				>Player 2</button
+			>
+		</div>
 	</div>
 </div>
 
