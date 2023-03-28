@@ -7,7 +7,7 @@
 			: '';
 </script>
 
-<header class="fixed flex h-12 z-20 text-sm md:text-xl uppercase">
+<header class="h-full text-sm md:text-xl uppercase">
 	<a class="w-screen no-underline hover:no-underline" href="/"
 		><h1 class="text-center flex-grow">Prompt Battle ({engine})</h1></a
 	>

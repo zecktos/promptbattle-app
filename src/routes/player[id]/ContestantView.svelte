@@ -5,8 +5,8 @@
 	import { Wave as LoadingSpinnerWave } from 'svelte-loading-spinners';
 
 	let prompt = '';
-	let imageUrl = '';
-	let showImage = true;
+	let imageUrl = 'https://picsum.photos/300';
+	let showImage = false;
 	let isGenerating = false;
 	let isCelebrating = false;
 
@@ -78,23 +78,25 @@
 	}
 </script>
 
-<div
-	class="absolute left-0 top-0 w-full h-full overflow-hidden text-black bg-violet-500 md:p-20 lg:p-36"
->
-	<div class="p-16">
-		<textarea
-			class="autofocus w-full h-full overflow-scroll bg-violet-500 top-0 left-0 text-4xl md:text-7xl "
-			placeholder="Type your prompt"
-			bind:value={prompt}
-			use:init
-		/>
+<div class="h-full p-6">
+	<div class="h-full flex flex-col md:flex-row">
+		{#if showImage}
+			<img
+				src={imageUrl}
+				class="object-contain w-full h-full flex-basis-40 basis-2/5 mr-4"
+				alt=""
+			/>
+		{/if}
+		<div class="flex-grow p-8 border-2 border-turquoise">
+			<textarea
+				class="autofocus w-full bg-inherit text-turquoise text-4xl md:text-7xl"
+				placeholder="Please type your prompt!"
+				bind:value={prompt}
+				use:init
+			/>
+		</div>
 	</div>
 
-	{#if showImage}
-		<div class="absolute top-0 left-0 flex w-100 h-screen">
-			<img alt="" class="h-full" src={imageUrl} />
-		</div>
-	{/if}
 	{#if isCelebrating}
 		<Confetti />
 	{/if}
@@ -107,6 +109,7 @@
 		class="w-full border-none focus:border-none left-0 bottom-0 absolute flex border-t-white border-2"
 	>
 		<div>Player {$page.params.id}</div>
+		<!--
 		<div class="ml-auto">
 			<button class="bg-white text-black p-1 md:p-4 z-10 " on:click={triggerReset} type="submit"
 				>Reset</button
@@ -115,6 +118,7 @@
 				>Generate</button
 			>
 		</div>
+		 -->
 	</div>
 </div>
 
@@ -129,5 +133,7 @@
 		box-shadow: none;
 
 		resize: none; /*remove the resize handle on the bottom right*/
+
+		height: 50vh;
 	}
 </style>

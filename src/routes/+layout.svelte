@@ -3,9 +3,9 @@
 	import Header from './Header.svelte';
 </script>
 
-<div>
-	<Header />
-	<div class="pt-12"><slot /></div>
+<div class="h-full flex flex-col">
+	<div class="h-8"><Header /></div>
+	<div class="flex-grow overflow-hidden"><slot /></div>
 </div>
 
 <style>
