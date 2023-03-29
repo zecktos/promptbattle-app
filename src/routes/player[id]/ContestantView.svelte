@@ -102,7 +102,7 @@
 	{/if}
 	{#if isGenerating}
 		<div class="absolute left-0 top-0 w-full h-full flex justify-center items-center z-10">
-			<LoadingSpinnerWave size="200" color="#FFF" unit="px" duration="1s" />
+			<LoadingSpinnerWave size="200" color="#6EEBEA" unit="px" duration="1s" />
 		</div>
 	{/if}
 	<div

@@ -4,18 +4,27 @@
 	import { page } from '$app/stores';
 	import { Wave as LoadingSpinnerWave } from 'svelte-loading-spinners';
 
-	const DEFAULT_PROMPT = '';
+	const DEFAULT_PROMPT = 'TEst this tis alkjwlkje f lkasdf';
 
 	let prompt = DEFAULT_PROMPT;
 	let fontSize = 122;
 	let imageUrl = '';
-	let showImage = true;
+	let showImage = false;
 	let isGenerating = false;
 	let isCelebrating = false;
 
 	const socket = io();
 
-	$: fontSize = 200 - prompt.length * 2;
+	function calcFontSize(promptLength) {
+		const max = 500;
+		const val = 3500 / promptLength + 40;
+		return val < max ? val : max;
+	}
+
+	$: fontSize = calcFontSize(prompt.length);
+	//Math.log(prompt.length); //200 - prompt.length * 2;
+
+	$: console.log(fontSize);
 
 	socket.on('promptChange', (payload) => {
 		if (String(payload.userId) === $page.params.id) {
@@ -66,7 +75,7 @@
 	{/if}
 	{#if !showImage}
 		<div class=" h-full w-full p-8">
-			<p use:init class="text-9xl">
+			<p class="text-4xl md:text-7xl" style="font-size: {fontSize}px;">
 				{prompt}
 			</p>
 		</div>
