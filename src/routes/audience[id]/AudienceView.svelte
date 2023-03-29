@@ -22,8 +22,6 @@
 	}
 
 	$: fontSize = calcFontSize(prompt.length);
-	$: console.log(fontSize);
-
 	socket.on('promptChange', (payload) => {
 		if (String(payload.userId) === $page.params.id) {
 			prompt = payload.prompt;
