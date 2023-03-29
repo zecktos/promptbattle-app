@@ -8,6 +8,7 @@ const configuration = new Configuration({
 const openai = new OpenAIApi(configuration);
 
 export async function createImage(prompt) {
+	console.log('****** Prompt******: ', prompt);
 	if (!OPENAI_API_KEY) throw Error('OPENAI_API_KEY missing!');
 	if (!prompt) throw Error('Prompt is missing'); //Fix how to do error-stuff in Sveltekit?
 	console.log('...Calling Dalle API...');

@@ -25,4 +25,5 @@ body {
 	background-attachment: fixed;
 	background-color: var(--color-bg-1);
 	color: white;
+	font-family: 'Share Tech Mono', monospace;
 }

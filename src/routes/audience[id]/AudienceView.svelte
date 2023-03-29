@@ -93,4 +93,7 @@
 </div>
 
 <style>
+	p {
+		line-height: 1;
+	}
 </style>
