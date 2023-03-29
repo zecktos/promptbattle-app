@@ -22,8 +22,6 @@
 	}
 
 	$: fontSize = calcFontSize(prompt.length);
-	//Math.log(prompt.length); //200 - prompt.length * 2;
-
 	$: console.log(fontSize);
 
 	socket.on('promptChange', (payload) => {
