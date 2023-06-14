@@ -1,5 +1,8 @@
 import { SD_API_URL } from '$env/static/private';
 
+const WIDTH = 512;
+const HEIGHT = 512;
+
 function createRequestBody(prompt, width, height) {
 	return {
 		data: [
@@ -13,7 +16,7 @@ function createRequestBody(prompt, width, height) {
 			false,
 			1,
 			1,
-			7,
+			1, //CGI
 			-1,
 			-1,
 			0,
@@ -53,7 +56,7 @@ function createRequestBody(prompt, width, height) {
 
 export async function createImage(prompt) {
 	if (!SD_API_URL) throw Error('SD_API_URL missing!');
-	const bodyContent = createRequestBody(prompt, 400, 400);
+	const bodyContent = createRequestBody(prompt, WIDTH, HEIGHT);
 	const response = await fetch(`${SD_API_URL}/run/predict/`, {
 		credentials: 'omit',
 		headers: {

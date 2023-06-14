@@ -4,7 +4,7 @@
 	import { page } from '$app/stores';
 	import { Wave as LoadingSpinnerWave } from 'svelte-loading-spinners';
 
-	const DEFAULT_PROMPT = 'TEst this tis alkjwlkje f lkasdf';
+	const DEFAULT_PROMPT = '';
 
 	let prompt = DEFAULT_PROMPT;
 	let fontSize = 122;
@@ -17,7 +17,7 @@
 
 	function calcFontSize(promptLength) {
 		const max = 500;
-		const val = 3500 / promptLength + 40;
+		const val = 3500 / promptLength + 100;
 		return val < max ? val : max;
 	}
 
