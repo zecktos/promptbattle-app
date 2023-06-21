@@ -2,6 +2,11 @@
 
 This is a little Sveltekit Application to support your local Prompt Battle event.
 
+## What is a Prompt Battle?
+It is a playful event where contestants compete against each other using text-to-image technology and predefined challenges.
+The event format was developed in 2022 by Florian A. Schmidt & Sebastian Schmieg together with a team of students of HTW Dresden: Bernadette Geiger, Ella Zickerick, Emily Krause, Levi Stein, Lina Schwarzenberg, Robert Hellwig.
+Since then, the Prompt Battle format has been remixed and further developed in several places, e.g. at the AI+D Lab at Hochschule für Gestaltung Schwäbisch Gmünd!
+
 ## Features:
 
 - Webserver to serve different clients/screens
