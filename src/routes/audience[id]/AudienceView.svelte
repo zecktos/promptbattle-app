@@ -16,7 +16,7 @@
 	const socket = io();
 
 	function calcFontSize(promptLength) {
-		const max = 500;
+		const max = 350;
 		const val = 3500 / promptLength + 100;
 		return val < max ? val : max;
 	}
@@ -71,7 +71,7 @@
 	{/if}
 	{#if !showImage}
 		<div class=" h-full w-full p-8">
-			<p class="text-4xl md:text-7xl" style="font-size: {fontSize}px;">
+			<p class="text-4xl md:text-7xl break-words" style="font-size: {fontSize}px;">
 				{prompt}
 			</p>
 		</div>
