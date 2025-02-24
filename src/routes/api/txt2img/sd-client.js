@@ -57,7 +57,7 @@ function createRequestBody(prompt, width, height) {
 export async function createImage(prompt) {
 	if (!SD_API_URL) throw Error('SD_API_URL missing!');
 	const bodyContent = createRequestBody(prompt, WIDTH, HEIGHT);
-	const response = await fetch(`${SD_API_URL}/run/predict/`, {
+	const response = await fetch(`${SD_API_URL}/sdapi/v1/txt2img`, {
 		credentials: 'omit',
 		headers: {
 			'User-Agent':
