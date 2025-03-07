@@ -3,55 +3,16 @@ import { SD_API_URL } from '$env/static/private';
 const WIDTH = 512;
 const HEIGHT = 512;
 
+
 function createRequestBody(prompt, width, height) {
 	return {
-		data: [
-			null,
-			prompt,
-			'',
-			[],
-			20,
-			'Euler a',
-			false,
-			false,
-			1,
-			1,
-			1, //CGI
-			-1,
-			-1,
-			0,
-			0,
-			0,
-			false,
-			height,
-			width,
-			false,
-			0.7,
-			2,
-			'Latent',
-			0,
-			0,
-			0,
-			'None',
-			false,
-			false,
-			false,
-			false,
-			'',
-			'Seed',
-			'',
-			'Nothing',
-			'',
-			true,
-			false,
-			false,
-			[],
-			'',
-			'',
-			''
-		],
-		fn_index: '70'
-	};
+		prompt: prompt,
+		width: width,
+		height: height,
+		batch_size: 1,
+		send_images: true,
+		save_images: false,
+	}
 }
 
 export async function createImage(prompt) {
@@ -92,8 +53,8 @@ export async function createImage(prompt) {
 	}
 
 	const responseJson = await response.json();
-	console.log(responseJson);
-	const imageUrlLocal = responseJson.data[0][0].name;
-	const imageUrlPublic = `${SD_API_URL}/file=${imageUrlLocal}`;
+	//console.log(responseJson.images[0]);
+	const imageUrlPublic = "data:image/gif;base64," + responseJson.images[0];
+
 	return { url: imageUrlPublic };
 }
