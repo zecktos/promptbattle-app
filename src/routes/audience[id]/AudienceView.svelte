@@ -8,8 +8,13 @@
 
 	let prompt = DEFAULT_PROMPT;
 	let fontSize = 122;
-	let imageUrl = '';
-	let showImage = false;
+	let selectedImage = '';
+	/**
+	 * @type {string | never[]}
+	 */
+	let images = [];
+	let showImages = false;
+	let showSelectedImg = false;
 	let isGenerating = false;
 	let isCelebrating = false;
 
@@ -28,15 +33,30 @@
 		}
 	});
 
-	socket.on('imageReady', (payload) => {
+	socket.on('testMsg', (payload) => {
+		console.log("msg:", payload.msg);
+	});
+
+	socket.on('imagesReady', (payload) => {
 		if (String(payload.userId) === $page.params.id) {
-			showImage = true;
-			imageUrl = payload.imageUrl;
+			console.log("images Ready");
+			showImages = true;
+			images = payload.images;
+		}
+	});
+
+	socket.on('imgSelected', (payload) => {
+		if (String(payload.userId) === $page.params.id) {
+			console.log("images Ready");
+			showImages = false;
+			selectedImage = payload.imageUrl;
+			showSelectedImg = true;
 		}
 	});
 
 	socket.on('celebrate', (winnerId) => {
 		if (String(winnerId) === $page.params.id) {
+			console.log("celebrate");
 			isCelebrating = true;
 			setTimeout(() => {
 				isCelebrating = false;
@@ -52,8 +72,10 @@
 
 	function reset() {
 		prompt = DEFAULT_PROMPT;
-		imageUrl = '';
-		showImage = false;
+		images = [];
+		selectedImage = '';
+		showImages = false;
+		showSelectedImg =false;
 		isGenerating = false;
 		isCelebrating = false;
 	}
@@ -64,18 +86,30 @@
 </script>
 
 <div class="h-full">
-	{#if showImage}
-		<div class="h-full">
-			<img src={imageUrl} class="object-contain w-full h-full" alt="" />
-		</div>
-	{/if}
-	{#if !showImage}
+	<div class="imgSelection">
+		{#if showImages}
+			{#each images as imgUrl }
+			<!-- svelte-ignore a11y-click-events-have-key-events -->
+			<img
+				src={imgUrl}
+				class="selectable"
+				alt=""
+			/>
+			{/each}
+		{:else if showSelectedImg}
+		<img
+			src={selectedImage}
+			class="object-contain"
+			alt=""
+		/>
+		{:else}
 		<div class=" h-full w-full p-8">
 			<p class="text-4xl md:text-7xl break-words" style="font-size: {fontSize}px;">
 				{prompt}
 			</p>
 		</div>
-	{/if}
+		{/if}
+	</div>
 </div>
 
 {#if isCelebrating}
@@ -95,5 +129,20 @@
 <style>
 	p {
 		line-height: 1;
+	}
+	.imgSelection {
+		margin-top: auto;
+    	margin-bottom: auto;
+		display: flex;
+		height: 100%;
+		justify-content: center;
+		flex-direction: row;
+	}
+	.selectable {
+		opacity: 1;
+		width: 100%;
+		object-fit: contain;
+		margin-left: 3px;
+		margin-right: 3px;
 	}
 </style>

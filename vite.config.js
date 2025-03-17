@@ -15,8 +15,11 @@ const webSocketServerPlugin = {
 			socket.on('promptChange', ({ userId, prompt }) => {
 				io.emit('promptChange', { userId: userId, prompt: prompt });
 			});
-			socket.on('imageReady', ({ userId, imageUrl }) => {
-				io.emit('imageReady', { userId: userId, imageUrl: imageUrl });
+			socket.on('imagesReady', ({ userId, images }) => {
+				io.emit('imagesReady', { userId: userId, images: images });
+			});
+			socket.on('imgSelected', ({ userId, imageUrl }) => {
+				io.emit('imgSelected', { userId: userId, imageUrl: imageUrl });
 			});
 			socket.on('celebrate', ({ userId }) => {
 				io.emit('celebrate', userId);

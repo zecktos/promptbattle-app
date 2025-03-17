@@ -5,8 +5,13 @@
 	import { Wave as LoadingSpinnerWave } from 'svelte-loading-spinners';
 
 	let prompt = '';
-	let imageUrl = 'https://picsum.photos/300';
-	let showImage = false;
+	/**
+	 * @type {any[]}
+	 */
+	let images = [];
+	let selectedImage = '';
+	let showImages = false;
+	let showSelectedImg = false;
 	let isGenerating = false;
 	let isCelebrating = false;
 
@@ -42,16 +47,19 @@
 
 	function reset() {
 		prompt = '';
-		imageUrl = '';
-		showImage = false;
+		images = [];
+		selectedImage= '';
+		showImages = false;
+		showSelectedImg = false;
 		isGenerating = false;
 		isCelebrating = false;
 	}
 
 	async function submit() {
+		socket.emit("testMsg", {msg: "lol"});
 		try {
-			showImage = false;
-			imageUrl = '';
+			showImages = false;
+			images = [];
 			isGenerating = true;
 			const response = await fetch('/api/txt2img', {
 				method: 'POST',
@@ -63,10 +71,10 @@
 				throw Error(jsonData.message);
 			}
 			isGenerating = false;
-			showImage = true;
+			showImages = true;
 			const jsonData = await response.json();
-			imageUrl = jsonData.url;
-			socket.emit('imageReady', { userId: $page.params.id, imageUrl: imageUrl });
+			images = jsonData.images;
+			socket.emit('imagesReady', { userId: $page.params.id, images: images });
 		} catch (err) {
 			alert(err);
 			isGenerating = false;
@@ -76,17 +84,36 @@
 	function init(el) {
 		el.focus();
 	}
+
+	function selectImg(imgUrl) {
+		console.log("image selected");
+		selectedImage = imgUrl;
+		socket.emit("imgSelected", {userId: $page.params.id, imageUrl: imgUrl});
+		showImages = false;
+		showSelectedImg = true;
+
+	}
 </script>
 
 <div class="h-full p-6">
-	<div class="h-full flex flex-col md:flex-row">
-		{#if showImage}
+	<div class="imgSelection">
+		{#if showImages}
+			{#each images as imgUrl }
+			<!-- svelte-ignore a11y-click-events-have-key-events -->
 			<img
-				src={imageUrl}
-				class="object-contain w-full h-full flex-basis-40 basis-2/5 mr-4"
+				src={imgUrl}
+				class="selectable"
 				alt=""
+				on:click={() => selectImg(imgUrl)}
 			/>
-		{/if}
+			{/each}
+		{:else if showSelectedImg}
+		<img
+			src={selectedImage}
+			class="object-contain"
+			alt=""
+		/>
+		{:else}
 		<div class="flex-grow p-8 border-2 border-turquoise">
 			<textarea
 				class="autofocus w-full bg-inherit text-turquoise text-4xl md:text-7xl"
@@ -95,6 +122,7 @@
 				use:init
 			/>
 		</div>
+		{/if}
 	</div>
 
 	{#if isCelebrating}
@@ -123,6 +151,14 @@
 </div>
 
 <style>
+	.imgSelection {
+		margin-top: auto;
+    	margin-bottom: auto;
+		display: flex;
+		height: 100%;
+		justify-content: center;
+		flex-direction: row;
+	}
 	textarea {
 		border: none;
 		overflow: auto;
@@ -135,5 +171,17 @@
 		resize: none; /*remove the resize handle on the bottom right*/
 
 		height: 50vh;
+	}
+	
+	.selectable {
+		opacity: 1;
+		width: 100%;
+		object-fit: contain;
+		margin-left: 3px;
+		margin-right: 3px;
+	}
+
+	.selectable:hover {
+		opacity: 0.8;
 	}
 </style>
