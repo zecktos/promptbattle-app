@@ -9,7 +9,7 @@ function createRequestBody(prompt, width, height) {
 		prompt: prompt,
 		width: width,
 		height: height,
-		batch_size: 1,
+		batch_size: 3,
 		send_images: true,
 		save_images: false,
 	}
@@ -55,6 +55,11 @@ export async function createImage(prompt) {
 	const responseJson = await response.json();
 	//console.log(responseJson.images[0]);
 	const imageUrlPublic = "data:image/gif;base64," + responseJson.images[0];
+	let finalImages = [];
+	for( let i = 0; i < responseJson.images.length; i++ ){
+		const imageUrl = "data:image/gif;base64," + responseJson.images[i];
+		finalImages.push(imageUrl);
+	}
 
-	return { url: imageUrlPublic };
+	return { images: finalImages };
 }
