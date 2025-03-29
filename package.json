@@ -2,8 +2,8 @@
 	"name": "promptbattle-app",
 	"version": "0.0.1",
 	"scripts": {
-		"battle:dalle": "VITE_IMAGE_ENGINE=dalle vite dev --host",
-		"battle:sd": "VITE_IMAGE_ENGINE=sd vite dev --host",
+		"battle:dalle": "set VITE_IMAGE_ENGINE=dalle& vite dev --host",
+		"battle:sd": "set VITE_IMAGE_ENGINE=sd& vite dev --host",
 		"dev": "vite dev --host",
 		"build": "vite build",
 		"preview": "vite preview",
@@ -40,7 +40,7 @@
 	"dependencies": {
 		"@leveluptuts/svelte-fit": "^1.0.3",
 		"@sveltejs/adapter-node": "^1.2.0",
-		"openai": "^3.2.1",
+		"openai": "^4.89.0",
 		"socket.io": "^4.6.1",
 		"socket.io-client": "^4.6.1"
 	}
