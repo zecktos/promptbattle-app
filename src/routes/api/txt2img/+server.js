@@ -3,33 +3,36 @@ import { createImage as sdCreateImage } from './sd-client';
 import { createImage as dalleCreateImage } from './dalle-client';
 
 export function GET(params) {
-	return new Response(JSON.stringify(params));
+  return new Response(JSON.stringify(params));
 }
 
 export async function POST({ request }) {
-	const requestJson = await request.json();
-	const { prompt } = requestJson;
-	const engine = import.meta.env.VITE_IMAGE_ENGINE;
+  const requestJson = await request.json();
+  const prompt = requestJson.payload.p
+  //const engine = import.meta.env.VITE_IMAGE_ENGINE;
+  const engine = requestJson.payload.e
+  const id = requestJson.payload.i
+  console.log("generating with:", engine)
 
-	if (!engine) {
-		throw error(500, { message: 'Unknown image generation engine!' });
-	}
-	let createImage;
-	switch (engine) {
-		case 'sd':
-			createImage = sdCreateImage;
-			break;
-		case 'dalle':
-			createImage = dalleCreateImage;
-			break;
-		default:
-			throw error(500, { message: 'Unknown image generation engine!' });
-	}
-	try {
-		const res = await createImage(prompt);
-		return json(res); //TODO: Add types! {url: 'my-url.png'}
-	} catch (err) {
-		console.log(err);
-		throw error(500, { message: 'There was a problem accessing the image generation API' });
-	}
+  if (!engine) {
+    throw error(500, { message: 'Unknown image generation engine!' });
+  }
+  let createImage;
+  switch (engine) {
+    case 'sd':
+      createImage = sdCreateImage;
+      break;
+    case 'dalle':
+      createImage = dalleCreateImage;
+      break;
+    default:
+      throw error(500, { message: 'Unknown image generation engine!' });
+  }
+  try {
+    const res = await createImage(prompt, id);
+    return json(res); //TODO: Add types! {url: 'my-url.png'}
+  } catch (err) {
+    console.log(err);
+    throw error(500, { message: 'There was a problem accessing the image generation API' });
+  }
 }

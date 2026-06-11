@@ -29,9 +29,14 @@
 		}
 	});
 
-	socket.on('generate', (winnerId) => {
+	socket.on('generate', (payload) => {
+		let winnerId = payload.userId;
+		let engine = payload.engine;
+		console.log('payload: ', payload);
 		if (!winnerId || String(winnerId) === $page.params.id) {
-			submit();
+			console.log('generate');
+			console.log(winnerId, engine);
+			submit(engine, $page.params.id);
 		}
 	});
 
@@ -48,22 +53,28 @@
 	function reset() {
 		prompt = '';
 		images = [];
-		selectedImage= '';
+		selectedImage = '';
 		showImages = false;
 		showSelectedImg = false;
 		isGenerating = false;
 		isCelebrating = false;
 	}
 
-	async function submit() {
-		socket.emit("testMsg", {msg: "lol"});
+	async function submit(engine, id) {
+		socket.emit('testMsg', { msg: 'lol' });
 		try {
 			showImages = false;
 			images = [];
 			isGenerating = true;
+			let payload = {
+				e: engine,
+				p: prompt,
+				i: id
+			};
+
 			const response = await fetch('/api/txt2img', {
 				method: 'POST',
-				body: JSON.stringify({ prompt }),
+				body: JSON.stringify({ payload }),
 				headers: { 'content-type': 'application/json' }
 			});
 			if (!response.ok) {
@@ -75,6 +86,8 @@
 			const jsonData = await response.json();
 			images = jsonData.images;
 			socket.emit('imagesReady', { userId: $page.params.id, images: images });
+			console.log('imagesReady');
+			console.log(images);
 		} catch (err) {
 			alert(err);
 			isGenerating = false;
@@ -86,42 +99,32 @@
 	}
 
 	function selectImg(imgUrl) {
-		console.log("image selected");
+		console.log('image selected');
 		selectedImage = imgUrl;
-		socket.emit("imgSelected", {userId: $page.params.id, imageUrl: imgUrl});
+		socket.emit('imgSelected', { userId: $page.params.id, imageUrl: imgUrl });
 		showImages = false;
 		showSelectedImg = true;
-
 	}
 </script>
 
 <div class="h-full p-6">
 	<div class="imgSelection">
 		{#if showImages}
-			{#each images as imgUrl }
-			<!-- svelte-ignore a11y-click-events-have-key-events -->
-			<img
-				src={imgUrl}
-				class="selectable"
-				alt=""
-				on:click={() => selectImg(imgUrl)}
-			/>
+			{#each images as imgUrl}
+				<!-- svelte-ignore a11y-click-events-have-key-events -->
+				<img src={imgUrl} class="selectable" alt="" on:click={() => selectImg(imgUrl)} />
 			{/each}
 		{:else if showSelectedImg}
-		<img
-			src={selectedImage}
-			class="object-contain"
-			alt=""
-		/>
+			<img src={selectedImage} class="object-contain" alt="" />
 		{:else}
-		<div class="flex-grow p-8 border-2 border-turquoise">
-			<textarea
-				class="autofocus w-full bg-inherit text-turquoise text-4xl md:text-7xl"
-				placeholder="Please type your prompt!"
-				bind:value={prompt}
-				use:init
-			/>
-		</div>
+			<div class="flex-grow p-8 border-2 border-turquoise">
+				<textarea
+					class="autofocus w-full bg-inherit text-turquoise text-4xl md:text-7xl"
+					placeholder="Please type your prompt!"
+					bind:value={prompt}
+					use:init
+				/>
+			</div>
 		{/if}
 	</div>
 
@@ -153,7 +156,7 @@
 <style>
 	.imgSelection {
 		margin-top: auto;
-    	margin-bottom: auto;
+		margin-bottom: auto;
 		display: flex;
 		height: 100%;
 		justify-content: center;
@@ -172,7 +175,7 @@
 
 		height: 50vh;
 	}
-	
+
 	.selectable {
 		opacity: 1;
 		width: 100%;
