@@ -8,5 +8,8 @@ node_modules
 !.env.example
 .vercel
 .output
+/static/1/*
+/static/2/*
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
+.last-run.json
